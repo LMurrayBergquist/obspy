@@ -31,6 +31,12 @@ if CARTOPY_VERSION and CARTOPY_VERSION >= [0, 12, 0]:
 else:
     HAS_CARTOPY = False
 
+# If BASEMAP_VERSION is None it will raise a TypeError when compared with
+# specific versions. Just use an empty list that will always be less than
+# a non-empty list.
+if not BASEMAP_VERSION:
+    BASEMAP_VERSION = []
+
 
 class EventTestCase(unittest.TestCase):
     """
@@ -127,7 +133,7 @@ class EventTestCase(unittest.TestCase):
     @unittest.skipIf(not BASEMAP_VERSION, 'basemap not installed')
     @unittest.skipIf(
         BASEMAP_VERSION >= [1, 1, 0] and MATPLOTLIB_VERSION == [3, 0, 1],
-        'matplotlib 3.0.1 is not campatible with basemap')
+        'matplotlib 3.0.1 is not compatible with basemap')
     @unittest.skipIf(PROJ4_VERSION[0] == 5, 'unsupported proj4 library')
     def test_plot_farfield_without_quiver_with_maps(self):
         """
